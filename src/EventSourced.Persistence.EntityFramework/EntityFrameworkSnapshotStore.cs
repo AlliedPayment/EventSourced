@@ -38,7 +38,7 @@ namespace EventSourced.Persistence.EntityFramework
             await _dbContext.SaveChangesAsync(ct);
         }
 
-        public async Task<TAggregateRoot?> LoadSnapshotAsync(Guid aggregateRootId, CancellationToken ct)
+        public async Task<TAggregateRoot?> LoadSnapshotAsync(string aggregateRootId, CancellationToken ct)
         {
             var aggregateType = typeof(TAggregateRoot);
             var serializedAggregateType = _typeSerializer.SerializeType(aggregateType);

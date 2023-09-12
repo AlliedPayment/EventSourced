@@ -75,7 +75,7 @@ namespace EventSourced.Tests.Persistence
             //Assert
             mockDomainEventListener.Verify(
                 s => s.HandleDomainEventAsync(It.IsAny<Type>(),
-                                              It.IsAny<Guid>(),
+                                              It.IsAny<string>(),
                                               It.IsAny<DomainEvent>(),
                                               It.IsAny<CancellationToken>()),
                 Times.Once);
@@ -162,7 +162,7 @@ namespace EventSourced.Tests.Persistence
         public async Task GetByIdAsync_WithExistingAggregate_RebuildsItFromEvents()
         {
             //Arrange
-            var aggregateId = Guid.NewGuid();
+            var aggregateId = Guid.NewGuid().ToString();
             var existingEvents = new[]
             {
                 new TestEvent(),
@@ -185,7 +185,7 @@ namespace EventSourced.Tests.Persistence
         public async Task GetByIdAsync_WithExistingAggregate_VersionIsSetCorrectly()
         {
             //Arrange
-            var aggregateId = Guid.NewGuid();
+            var aggregateId = Guid.NewGuid().ToString();
             var existingEvents = new[]
             {
                 new TestEvent(1),
@@ -209,7 +209,7 @@ namespace EventSourced.Tests.Persistence
         public async Task GetByIdAsync_WithExistingSnapshot_UsesTheSnapshotVersion()
         {
             //Arrange
-            var aggregateId = Guid.NewGuid();
+            var aggregateId = Guid.NewGuid().ToString();
             var existingEvents = Array.Empty<DomainEvent>();
             _eventStoreMock.WithGetByStreamIdAsync(aggregateId, existingEvents);
             var aggregateRootFromSnapshot = new TestAggregate(aggregateId);
@@ -233,8 +233,8 @@ namespace EventSourced.Tests.Persistence
         public async Task GetAllAsync_WithExistingAggregates_RebuildsAllFromEvents()
         {
             //Arrange
-            var aggregateId = Guid.NewGuid();
-            var aggregateId2 = Guid.NewGuid();
+            var aggregateId = Guid.NewGuid().ToString();
+            var aggregateId2 = Guid.NewGuid().ToString();
             var existingEvents = new[]
             {
                 new TestEvent(),
@@ -242,7 +242,7 @@ namespace EventSourced.Tests.Persistence
                 new TestEvent(),
                 new TestEvent()
             };
-            _eventStoreMock.WithGetAllStreamsOfType(new Dictionary<Guid, DomainEvent[]>
+            _eventStoreMock.WithGetAllStreamsOfType(new Dictionary<string, DomainEvent[]>
             {
                 {aggregateId, existingEvents.ToArray()},
                 {aggregateId2, existingEvents.ToArray()}
@@ -268,7 +268,7 @@ namespace EventSourced.Tests.Persistence
         public async Task ExistsAsync_WithExistingStream_ReturnsTrue()
         {
             //Arrange
-            var aggregateId = Guid.NewGuid();
+            var aggregateId = Guid.NewGuid().ToString();
             _eventStoreMock.WithStreamExistsAsync(true);
             var repository = CreateSut();
 
@@ -284,7 +284,7 @@ namespace EventSourced.Tests.Persistence
         public async Task ExistsAsync_WithNonExistingStream_ReturnsFalse()
         {
             //Arrange
-            var aggregateId = Guid.NewGuid();
+            var aggregateId = Guid.NewGuid().ToString();
             _eventStoreMock.WithStreamExistsAsync(false);
             var repository = CreateSut();
 
@@ -300,7 +300,7 @@ namespace EventSourced.Tests.Persistence
         
         private void VerifyEventStoreSaveMethodCalled()
         {
-            _eventStoreMock.Verify(s => s.StoreEventsAsync(It.IsAny<Guid>(),
+            _eventStoreMock.Verify(s => s.StoreEventsAsync(It.IsAny<string>(),
                                                            It.IsAny<Type>(),
                                                            It.IsAny<IList<DomainEvent>>(),
                                                            It.IsAny<CancellationToken>()),
@@ -347,11 +347,11 @@ namespace EventSourced.Tests.Persistence
             public int EventsCount { get; private set; }
 
             public TestAggregate()
-                : this(Guid.NewGuid())
+                : this(Guid.NewGuid().ToString())
             {
             }
 
-            public TestAggregate(Guid id)
+            public TestAggregate(string id)
                 : base(id)
             {
             }

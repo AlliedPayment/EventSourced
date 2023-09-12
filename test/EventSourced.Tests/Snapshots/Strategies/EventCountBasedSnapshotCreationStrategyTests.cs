@@ -13,7 +13,7 @@ namespace EventSourced.Tests.Snapshots.Strategies
         public void ShouldCreateSnapshot_WhenAggregateVersionMatches_ReturnsTrue()
         {
             //Arrange
-            var aggregateRoot = new TestAggregateRoot(Guid.NewGuid());
+            var aggregateRoot = new TestAggregateRoot(Guid.NewGuid().ToString());
             aggregateRoot.SetVersion(5);
             var sut = CreateSut(5);
             
@@ -29,7 +29,7 @@ namespace EventSourced.Tests.Snapshots.Strategies
         public void ShouldCreateSnapshot_WhenAggregateVersionDoesNotMatch_ReturnsFalse()
         {
             //Arrange
-            var aggregateRoot = new TestAggregateRoot(Guid.NewGuid());
+            var aggregateRoot = new TestAggregateRoot(Guid.NewGuid().ToString());
             aggregateRoot.SetVersion(4);
             var sut = CreateSut(5);
             
@@ -48,7 +48,7 @@ namespace EventSourced.Tests.Snapshots.Strategies
         
         private class TestAggregateRoot : AggregateRoot
         {
-            public TestAggregateRoot(Guid id)
+            public TestAggregateRoot(string id)
                 : base(id)
             {
             }

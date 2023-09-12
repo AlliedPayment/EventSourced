@@ -19,7 +19,7 @@ namespace EventSourced.Tests.Persistence.EntityFramework
         public async Task GetByStreamIdAsync_WithExistingValues_LoadsThemCorrectly()
         {
             //Arrange
-            var streamId = Guid.NewGuid();
+            var streamId = Guid.NewGuid().ToString();
             var testEvents = new List<DomainEvent>
             {
                 new TestEvent(1),
@@ -44,7 +44,7 @@ namespace EventSourced.Tests.Persistence.EntityFramework
         public async Task GetByStreamIdAsync_WithExistingValuesAndVersionInformation_LoadsThemCorrectly()
         {
             //Arrange
-            var streamId = Guid.NewGuid();
+            var streamId = Guid.NewGuid().ToString();
             var testEvents = new List<DomainEvent>
             {
                 new TestEvent(1),
@@ -69,7 +69,7 @@ namespace EventSourced.Tests.Persistence.EntityFramework
         public async Task GetAllStreamsOfTypeAsync_WithExistingValues_LoadsThemCorrectly()
         {
             //Arrange
-            var streamId = Guid.NewGuid();
+            var streamId = Guid.NewGuid().ToString();
             var testEvents = new List<DomainEvent>
             {
                 new TestEvent(1),
@@ -97,7 +97,7 @@ namespace EventSourced.Tests.Persistence.EntityFramework
         public async Task GetEventsOfTypeAsync_WithExistingValues_LoadsThemCorrectly()
         {
             //Arrange
-            var streamId = Guid.NewGuid();
+            var streamId = Guid.NewGuid().ToString();
             var testEvents = new List<DomainEvent>
             {
                 new TestEvent(1),
@@ -120,7 +120,7 @@ namespace EventSourced.Tests.Persistence.EntityFramework
         public async Task StreamExistsAsync_WithExistingValues_ReturnsTrue()
         {
             //Arrange
-            var streamId = Guid.NewGuid();
+            var streamId = Guid.NewGuid().ToString();
             var testEvents = new List<DomainEvent>
             {
                 new TestEvent(1),
@@ -142,7 +142,7 @@ namespace EventSourced.Tests.Persistence.EntityFramework
         public async Task StreamExistsAsync_WithNonExistingValues_ReturnsFalse()
         {
             //Arrange
-            var streamId = Guid.NewGuid();
+            var streamId = Guid.NewGuid().ToString();
             var sut = CreateSut();
 
             //Act
@@ -174,7 +174,7 @@ namespace EventSourced.Tests.Persistence.EntityFramework
 
         private class TestAggregate : AggregateRoot
         {
-            public TestAggregate(Guid id)
+            public TestAggregate(string id)
                 : base(id)
             {
             }

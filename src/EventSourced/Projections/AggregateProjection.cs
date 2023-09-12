@@ -5,9 +5,9 @@ namespace EventSourced.Projections
 {
     public abstract class AggregateProjection<TAggregateRoot> where TAggregateRoot : AggregateRoot
     {
-        public Guid Id { get; }
+        public string Id { get; }
 
-        protected AggregateProjection(Guid id)
+        protected AggregateProjection(string id)
         {
             Id = id;
         }

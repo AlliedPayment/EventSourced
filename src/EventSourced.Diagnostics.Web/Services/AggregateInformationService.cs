@@ -40,7 +40,7 @@ namespace EventSourced.Diagnostics.Web.Services
                              .ToList();
         }
 
-        public async Task<AggregateInstancesListItemModel> GetStoredAggregateByIdAndVersionAsync(Guid aggregateId, Type aggregateType, int version, CancellationToken ct)
+        public async Task<AggregateInstancesListItemModel> GetStoredAggregateByIdAndVersionAsync(string aggregateId, Type aggregateType, int version, CancellationToken ct)
         {
             var stream = await _eventStore.GetByStreamIdAsync(aggregateId, aggregateType, 0, ct);
             var versionedStream = stream.Where(e => e.Version <= version)
@@ -49,7 +49,7 @@ namespace EventSourced.Diagnostics.Web.Services
             return _aggregateInstancesListItemModelMapper.MapToModel(item.aggregateRoot, item.events);
         }
 
-        private IEnumerable<(AggregateRoot aggregateRoot, DomainEvent[] events)> RebuildAggregatesFromStreams(IDictionary<Guid, DomainEvent[]> streams, Type aggregateType)
+        private IEnumerable<(AggregateRoot aggregateRoot, DomainEvent[] events)> RebuildAggregatesFromStreams(IDictionary<string, DomainEvent[]> streams, Type aggregateType)
         {
             foreach (var (streamId, events) in streams)
             {
@@ -57,7 +57,7 @@ namespace EventSourced.Diagnostics.Web.Services
             }
         }
 
-        private static (AggregateRoot aggregateRoot, DomainEvent[] events) RebuildAggregateFromStream(Type aggregateType, Guid streamId, DomainEvent[] events)
+        private static (AggregateRoot aggregateRoot, DomainEvent[] events) RebuildAggregateFromStream(Type aggregateType, string streamId, DomainEvent[] events)
         {
             var aggregateRoot = AggregateRootFactory.CreateAggregateRoot(streamId, aggregateType);
             aggregateRoot.RebuildFromEvents(events);

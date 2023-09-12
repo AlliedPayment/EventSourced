@@ -16,7 +16,7 @@ namespace EventSourced.Persistence.EntityFramework.Mappers
             _eventSerializer = eventSerializer;
         }
 
-        public DomainEventEntity MapToEntity(DomainEvent domainEvent, Guid streamId, Type aggregateRootType)
+        public DomainEventEntity MapToEntity(DomainEvent domainEvent, string streamId, Type aggregateRootType)
         {
             return new()
             {

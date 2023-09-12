@@ -41,7 +41,7 @@ namespace EventSourced.Tests.Projections
         public async Task BuildAggregateProjectionAsync_WithExistingApplicableEvents_BuildsTheProjection()
         {
             //Arrange
-            var aggregateId = Guid.NewGuid();
+            var aggregateId = Guid.NewGuid().ToString();
             var existingEvents = new[]
             {
                 new TestEvent(),
@@ -73,7 +73,7 @@ namespace EventSourced.Tests.Projections
 
         private class TestAggregateRoot : AggregateRoot
         {
-            public TestAggregateRoot(Guid id)
+            public TestAggregateRoot(string id)
                 : base(id)
             {
             }
@@ -97,7 +97,7 @@ namespace EventSourced.Tests.Projections
         {
             public int AppliedEventsCount { get; private set; }
 
-            public EventCountAggregateProjection(Guid id)
+            public EventCountAggregateProjection(string id)
                 : base(id)
             {
             }

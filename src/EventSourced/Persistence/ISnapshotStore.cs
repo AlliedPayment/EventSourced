@@ -10,6 +10,6 @@ namespace EventSourced.Persistence
         where TAggregateRoot : AggregateRoot
     {
         Task StoreSnapshotAsync(TAggregateRoot aggregateRoot, CancellationToken ct);
-        Task<TAggregateRoot?> LoadSnapshotAsync(Guid aggregateRootId, CancellationToken ct);
+        Task<TAggregateRoot?> LoadSnapshotAsync(string aggregateRootId, CancellationToken ct);
     }
 }

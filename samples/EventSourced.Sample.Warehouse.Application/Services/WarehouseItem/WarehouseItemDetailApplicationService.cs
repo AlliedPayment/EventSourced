@@ -26,13 +26,13 @@ namespace EventSourced.Sample.Warehouse.Application.Services.WarehouseItem
         {
             var warehouseItemDetailProjection =
                 await _projectionStore.LoadAggregateProjectionAsync<WarehouseItemDetailProjection, WarehouseItemAggregateRoot>(
-                    warehouseItemId,
+                    warehouseItemId.ToString(),
                     ct);
             if (warehouseItemDetailProjection == null)
             {
                 throw new ArgumentException();
             }
-            return new WarehouseItemDetailModel(warehouseItemDetailProjection.Id, warehouseItemDetailProjection.Title);
+            return new WarehouseItemDetailModel(Guid.Parse(warehouseItemDetailProjection.Id), warehouseItemDetailProjection.Title);
         }
     }
 }

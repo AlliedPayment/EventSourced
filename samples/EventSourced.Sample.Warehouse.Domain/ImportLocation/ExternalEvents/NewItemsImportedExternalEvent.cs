@@ -29,7 +29,7 @@ namespace EventSourced.Sample.Warehouse.Domain.ImportLocation.ExternalEvents
                 throw new ArgumentException("Import location projection was not found in the system.");
             }
             
-            var importLocation = await _importLocationRepository.GetByIdAsync(importLocationProjection.ImportLocationId, ct);
+            var importLocation = await _importLocationRepository.GetByIdAsync(importLocationProjection.ImportLocationId.ToString(), ct);
             importLocation.ImportWarehouseItem(externalEvent.WarehouseItemId, externalEvent.Amount);
             await _importLocationRepository.SaveAsync(importLocation, ct);
         }

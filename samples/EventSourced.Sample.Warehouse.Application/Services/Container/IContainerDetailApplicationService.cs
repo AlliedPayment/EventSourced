@@ -7,6 +7,6 @@ namespace EventSourced.Sample.Warehouse.Application.Services.Container
 {
     public interface IContainerDetailApplicationService
     {
-        Task<ContainerDetailModel> GetContainerDetailAsync(Guid containerId, CancellationToken ct);
+        Task<ContainerDetailModel> GetContainerDetailAsync(string containerId, CancellationToken ct);
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EventSourced.Sample.Warehouse.Application.Model
 {
-    public record ContainerDetailModel(Guid Id,
+    public record ContainerDetailModel(string Id,
                                        string Identifier,
                                        ICollection<ContainerContentListItemModel> ContainerContents);
 

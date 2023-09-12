@@ -16,7 +16,7 @@ namespace EventSourced.Sample.Warehouse.Domain.Container.Projections
         public IDictionary<Guid, int> ContainedWarehouseItems { get; private set; } = new Dictionary<Guid, int>();
 
         public ContainerDetailProjection(Guid id)
-            : base(id)
+            : base(id.ToString())
         {
         }
 

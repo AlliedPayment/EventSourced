@@ -25,7 +25,7 @@ namespace EventSourced.Persistence.EntityFramework
             _typeSerializer = typeSerializer;
         }
 
-        public async Task StoreEventsAsync(Guid streamId,
+        public async Task StoreEventsAsync(string streamId,
                                            Type aggregateRootType,
                                            IList<DomainEvent> domainEvents,
                                            CancellationToken ct)
@@ -38,10 +38,10 @@ namespace EventSourced.Persistence.EntityFramework
             await _dbContext.SaveChangesAsync(ct);
         }
 
-        public async Task<DomainEvent[]> GetByStreamIdAsync(Guid streamId,
-                                                             Type aggregateRootType,
-                                                             int fromEventVersion,
-                                                             CancellationToken ct)
+        public async Task<DomainEvent[]> GetByStreamIdAsync(string streamId,
+                                                            Type aggregateRootType,
+                                                            int fromEventVersion,
+                                                            CancellationToken ct)
         {
             var serializedAggregateType = _typeSerializer.SerializeType(aggregateRootType);
             var eventEntities = await _dbContext.Events
@@ -53,7 +53,7 @@ namespace EventSourced.Persistence.EntityFramework
                                 .ToArray();
         }
 
-        public Task<bool> StreamExistsAsync(Guid streamId, Type aggregateRootType, CancellationToken ct)
+        public Task<bool> StreamExistsAsync(string streamId, Type aggregateRootType, CancellationToken ct)
         {
             var serializedAggregateType = _typeSerializer.SerializeType(aggregateRootType);
             return _dbContext.Events.Where(e => e.StreamId == streamId)
@@ -61,7 +61,7 @@ namespace EventSourced.Persistence.EntityFramework
                              .AnyAsync(ct);
         }
 
-        public async Task<IDictionary<Guid, DomainEvent[]>> GetAllStreamsOfType(Type aggregateRootType, CancellationToken ct)
+        public async Task<IDictionary<string, DomainEvent[]>> GetAllStreamsOfType(Type aggregateRootType, CancellationToken ct)
         {
             var serializedAggregateType = _typeSerializer.SerializeType(aggregateRootType);
             var eventEntities = await _dbContext.Events.Where(e => e.AggregateRootType == serializedAggregateType)

@@ -15,7 +15,7 @@ namespace EventSourced.Tests.Persistence.Null
         public async Task LoadSnapshotAsync_WithExistingAggregate_CanNotBeLoaded()
         {
             //Arrange
-            var aggregateRoot = new TestAggregateRoot(Guid.NewGuid());
+            var aggregateRoot = new TestAggregateRoot(Guid.NewGuid().ToString());
             var sut = CreateSut();
 
             //Act
@@ -34,7 +34,7 @@ namespace EventSourced.Tests.Persistence.Null
 
         private class TestAggregateRoot : AggregateRoot
         {
-            public TestAggregateRoot(Guid id)
+            public TestAggregateRoot(string id)
                 : base(id)
             {
             }

@@ -15,7 +15,7 @@ namespace EventSourced.Tests.Persistence.EntityFramework.Mappers
         public void MapToEntity_WhenMappedBack_MapsCorrectly()
         {
             //Arrange
-            var aggregateId = Guid.NewGuid();
+            var aggregateId = Guid.NewGuid().ToString();
             var testEvent = new TestEvent(42);
             var sut = CreateSut();
             
@@ -48,7 +48,7 @@ namespace EventSourced.Tests.Persistence.EntityFramework.Mappers
 
         private class TestAggregate : AggregateRoot
         {
-            public TestAggregate(Guid id)
+            public TestAggregate(string id)
                 : base(id)
             {
             }

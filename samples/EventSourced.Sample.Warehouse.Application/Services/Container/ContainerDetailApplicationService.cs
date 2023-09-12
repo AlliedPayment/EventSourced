@@ -26,7 +26,7 @@ namespace EventSourced.Sample.Warehouse.Application.Services.Container
             _warehouseItemTitleService = warehouseItemTitleService;
         }
         
-        public async Task<ContainerDetailModel> GetContainerDetailAsync(Guid containerId, CancellationToken ct)
+        public async Task<ContainerDetailModel> GetContainerDetailAsync(String containerId, CancellationToken ct)
         {
             var containerDetailProjection = await _manualProjectionBuilder.BuildAggregateProjection<ContainerDetailProjection, ContainerAggregateRoot>(containerId, ct);
             var allWarehouseItems = await _projectionStore.LoadProjectionAsync<AllWarehouseItemsListProjection>(ct);

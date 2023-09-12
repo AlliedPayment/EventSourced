@@ -12,16 +12,16 @@ namespace EventSourced.Persistence.InMemory
     public class InMemorySnapshotStore<TAggregateRoot> : ISnapshotStore<TAggregateRoot> 
         where TAggregateRoot : AggregateRoot
     {
-        private ConcurrentDictionary<Guid, AggregateSnapshot<TAggregateRoot>> Snapshots { get; }
+        private ConcurrentDictionary<string, AggregateSnapshot<TAggregateRoot>> Snapshots { get; }
 
         public InMemorySnapshotStore()
-            : this(new Dictionary<Guid, AggregateSnapshot<TAggregateRoot>>())
+            : this(new Dictionary<string, AggregateSnapshot<TAggregateRoot>>())
         {
         }
 
-        public InMemorySnapshotStore(IDictionary<Guid, AggregateSnapshot<TAggregateRoot>> snapshots)
+        public InMemorySnapshotStore(IDictionary<string, AggregateSnapshot<TAggregateRoot>> snapshots)
         {
-            Snapshots = new ConcurrentDictionary<Guid, AggregateSnapshot<TAggregateRoot>>(snapshots);
+            Snapshots = new ConcurrentDictionary<string, AggregateSnapshot<TAggregateRoot>>(snapshots);
         }
 
         public Task StoreSnapshotAsync(TAggregateRoot aggregateRoot, CancellationToken ct)
@@ -31,7 +31,7 @@ namespace EventSourced.Persistence.InMemory
             return Task.CompletedTask;
         }
 
-        public Task<TAggregateRoot?> LoadSnapshotAsync(Guid aggregateRootId, CancellationToken ct)
+        public Task<TAggregateRoot?> LoadSnapshotAsync(string aggregateRootId, CancellationToken ct)
         {
             if (Snapshots.TryGetValue(aggregateRootId, out var aggregateSnapshot))
             {

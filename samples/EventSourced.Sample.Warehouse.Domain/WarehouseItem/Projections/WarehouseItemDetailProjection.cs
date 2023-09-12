@@ -8,7 +8,7 @@ namespace EventSourced.Sample.Warehouse.Domain.WarehouseItem.Projections
     {
         public string Title { get; private set; } = string.Empty;
 
-        public WarehouseItemDetailProjection(Guid id)
+        public WarehouseItemDetailProjection(string id)
             : base(id)
         {
         }

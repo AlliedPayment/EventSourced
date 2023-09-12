@@ -9,7 +9,7 @@ namespace EventSourced.TestsSupport
 {
     public static class TestAggregateRootFactory
     {
-        public static TAggregateRoot CreateAggregateFromEvents<TAggregateRoot>(Guid id, string eventsArrayJson)
+        public static TAggregateRoot CreateAggregateFromEvents<TAggregateRoot>(string id, string eventsArrayJson)
             where TAggregateRoot : AggregateRoot
         {
             var aggregateRoot = AggregateRootFactory.CreateAggregateRoot<TAggregateRoot>(id);
@@ -24,7 +24,7 @@ namespace EventSourced.TestsSupport
             return aggregateRoot;
         }
         
-        public static TAggregateRoot CreateAggregateFromState<TAggregateRoot>(Guid id , string aggregateStateJson)
+        public static TAggregateRoot CreateAggregateFromState<TAggregateRoot>(string id , string aggregateStateJson)
             where TAggregateRoot : AggregateRoot
         {
             var aggregateRoot = AggregateRootFactory.CreateAggregateRoot<TAggregateRoot>(id);

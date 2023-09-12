@@ -11,7 +11,7 @@ using System.Threading.Tasks;
         Task<ICollection<AggregateTypesListItemModel>> GetStoredAggregateTypesAsync(CancellationToken ct);
         Task<ICollection<AggregateInstancesListItemModel>> GetStoredAggregatesOfTypeAsync(Type aggregateType, CancellationToken ct);
         Task<AggregateInstancesListItemModel> GetStoredAggregateByIdAndVersionAsync(
-            Guid aggregateId,
+            string aggregateId,
             Type aggregateType,
             int version,
             CancellationToken ct);

@@ -19,7 +19,7 @@ namespace EventSourced.Sample.Warehouse.Domain.WarehouseItem.Services
         public async Task<string> GetWarehouseItemTitleAsync(Guid warehouseItemId, CancellationToken ct)
         {
             var warehouseItem = await _projectionStore.LoadAggregateProjectionAsync<WarehouseItemDetailProjection, WarehouseItemAggregateRoot>(
-                warehouseItemId,
+                warehouseItemId.ToString(),
                 ct);
             if (warehouseItem == null)
             {

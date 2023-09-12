@@ -11,12 +11,12 @@ namespace EventSourced.Sample.Warehouse.Domain.ImportLocation
     {
         public ICollection<ImportedItemsValueObject> ImportedItems { get; private set; } = new List<ImportedItemsValueObject>();
 
-        internal ImportLocationAggregateRoot() : base(Guid.NewGuid())
+        internal ImportLocationAggregateRoot() : base(Guid.NewGuid().ToString())
         {
-            EnqueueAndApplyEvent(new ImportLocationCreatedDomainEvent(Id));
+            EnqueueAndApplyEvent(new ImportLocationCreatedDomainEvent(Guid.Parse(Id)));
         }
         
-        public ImportLocationAggregateRoot(Guid id)
+        public ImportLocationAggregateRoot(string id)
             : base(id)
         {
         }

@@ -15,7 +15,7 @@ namespace EventSourced.Persistence.EntityFramework.Mappers
             _typeSerializer = typeSerializer;
         }
 
-        public AggregateBasedProjectionEntity MapToEntity(Guid aggregateRootId, object projection)
+        public AggregateBasedProjectionEntity MapToEntity(string aggregateRootId, object projection)
         {
             var serializedType = _typeSerializer.SerializeType(projection.GetType());
             return new AggregateBasedProjectionEntity

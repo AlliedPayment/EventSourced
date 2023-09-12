@@ -33,7 +33,7 @@ namespace EventSourced.Diagnostics.Web.Pages.AggregatesList
             new List<AggregateInstancesListItemModel>();
         [Bind(Direction.ServerToClient)]
         public AggregateInstancesListItemModel? SelectedAggregateInstance { get; set; }
-        public Guid? SelectedAggregateInstanceId { get; set; }
+        public string? SelectedAggregateInstanceId { get; set; }
         public int? SelectedVersion { get; set; }
         public int? SelectedMaxVersion { get; set; }
 
@@ -62,10 +62,10 @@ namespace EventSourced.Diagnostics.Web.Pages.AggregatesList
 
         public async Task ChangeVersion(int version)
         {
-            if (!SelectedAggregateInstanceId.HasValue) return;
+            if (string.IsNullOrEmpty(SelectedAggregateInstanceId)) return;
             SelectedAggregateInstance =
                 await _aggregateInformationService.GetStoredAggregateByIdAndVersionAsync(
-                    SelectedAggregateInstanceId.Value,
+                    SelectedAggregateInstanceId,
                     AggregateRootType,
                     version,
                     RequestCancellationToken);

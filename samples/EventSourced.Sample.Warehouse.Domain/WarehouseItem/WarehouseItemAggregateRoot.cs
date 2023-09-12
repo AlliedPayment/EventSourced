@@ -9,13 +9,13 @@ namespace EventSourced.Sample.Warehouse.Domain.WarehouseItem
         public string Title { get; private set; } = string.Empty;
 
         public WarehouseItemAggregateRoot(string title)
-            : base(Guid.NewGuid())
+            : base(Guid.NewGuid().ToString())
         {
-            EnqueueAndApplyEvent(new WarehouseItemCreatedDomainEvent(Id, title));
+            EnqueueAndApplyEvent(new WarehouseItemCreatedDomainEvent(Guid.Parse(Id), title));
         }
 
         public WarehouseItemAggregateRoot(Guid id)
-            : base(id)
+            : base(id.ToString())
         {
         }
 
@@ -26,7 +26,7 @@ namespace EventSourced.Sample.Warehouse.Domain.WarehouseItem
                 throw new ArgumentException($"{nameof(title)} can not be null or empty.");
             }
             
-            EnqueueAndApplyEvent(new WarehouseItemTitleUpdatedDomainEvent(Id, title));
+            EnqueueAndApplyEvent(new WarehouseItemTitleUpdatedDomainEvent(Guid.Parse(Id), title));
         } 
         
         private void Apply(WarehouseItemCreatedDomainEvent @event)

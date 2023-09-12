@@ -4,7 +4,7 @@ namespace EventSourced.Domain.Snapshosts
 {
     public class AggregateSnapshot<TAggregateRoot> where TAggregateRoot : AggregateRoot
     {
-        public Guid Id { get; }
+        public string Id { get; }
         public int Version { get; }
         public TAggregateRoot AggregateState { get; set; }
 

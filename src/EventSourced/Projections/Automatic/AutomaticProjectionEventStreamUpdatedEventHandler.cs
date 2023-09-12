@@ -21,7 +21,7 @@ namespace EventSourced.Projections.Automatic
         }
 
         public async Task HandleDomainEventAsync(Type aggregateRootType,
-                                                 Guid aggregateRootId,
+                                                 string aggregateRootId,
                                                  DomainEvent domainEvent,
                                                  CancellationToken ct)
         {

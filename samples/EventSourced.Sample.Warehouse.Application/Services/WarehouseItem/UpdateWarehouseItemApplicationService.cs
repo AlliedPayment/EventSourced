@@ -22,7 +22,7 @@ namespace EventSourced.Sample.Warehouse.Application.Services.WarehouseItem
 
         public async Task UpdateAsync(Guid warehouseItemId, string title, CancellationToken ct)
         {
-            var warehouseItem = await _warehouseItemRepository.GetByIdAsync(warehouseItemId, ct);
+            var warehouseItem = await _warehouseItemRepository.GetByIdAsync(warehouseItemId.ToString(), ct);
             warehouseItem.UpdateTitle(title);
             await _warehouseItemRepository.SaveAsync(warehouseItem, ct);
         }

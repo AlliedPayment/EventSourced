@@ -97,7 +97,7 @@ namespace EventSourced.Tests.Persistence.EntityFramework
         public async Task LoadAggregateProjectionAsync_WithPreviouslyStoredProjection_ReturnsIt()
         {
             //Arrange
-            var aggregateId = Guid.NewGuid();
+            var aggregateId = Guid.NewGuid().ToString();
             var aggregateProjection = new TestAggregateBasedProjection(aggregateId);
             aggregateProjection.SetValue(42);
             var dbContext = TestDbContextFactory.Create();
@@ -122,7 +122,7 @@ namespace EventSourced.Tests.Persistence.EntityFramework
         public async Task LoadAggregateProjectionAsync_WithoutExistingValue_ReturnsNull()
         {
             //Arrange
-            var aggregateId = Guid.NewGuid();
+            var aggregateId = Guid.NewGuid().ToString();
             var sut = CreateSut(TestDbContextFactory.Create());
 
             //Act
@@ -140,7 +140,7 @@ namespace EventSourced.Tests.Persistence.EntityFramework
         public async Task LoadAggregateProjectionAsync_WithPreviouslyUpdatedProjection_ReturnsIt()
         {
             //Arrange
-            var aggregateId = Guid.NewGuid();
+            var aggregateId = Guid.NewGuid().ToString();
             var aggregateProjection = new TestAggregateBasedProjection(aggregateId);
             aggregateProjection.SetValue(42);
             var dbContext = TestDbContextFactory.Create();
@@ -168,7 +168,7 @@ namespace EventSourced.Tests.Persistence.EntityFramework
         public async Task LoadAllAggregateProjectionAsync_WithoutExistingValue_ReturnsNull()
         {
             //Arrange
-            var aggregateId = Guid.NewGuid();
+            var aggregateId = Guid.NewGuid().ToString();
             var aggregateProjection = new TestAggregateBasedProjection(aggregateId);
             var sut = CreateSut(TestDbContextFactory.Create());
 
@@ -214,7 +214,7 @@ namespace EventSourced.Tests.Persistence.EntityFramework
         {
             public int Value { get; private set; }
 
-            public TestAggregateBasedProjection(Guid id)
+            public TestAggregateBasedProjection(string id)
                 : base(id)
             {
             }
@@ -227,7 +227,7 @@ namespace EventSourced.Tests.Persistence.EntityFramework
 
         private class TestAggregateRoot : AggregateRoot
         {
-            public TestAggregateRoot(Guid id)
+            public TestAggregateRoot(string id)
                 : base(id)
             {
             }

@@ -14,13 +14,13 @@ namespace EventSourced.Sample.Warehouse.Domain.Container
             new List<WarehouseItemInContainerValueObject>();
 
         public ContainerAggregateRoot(string identifier)
-            : base(Guid.NewGuid())
+            : base(Guid.NewGuid().ToString())
         {
-            EnqueueAndApplyEvent(new ContainerCreatedDomainEvent(Id, identifier));                
+            EnqueueAndApplyEvent(new ContainerCreatedDomainEvent(Guid.Parse(Id), identifier));                
         }   
         
         private ContainerAggregateRoot(Guid id)
-            : base(id)
+            : base(id.ToString())
         {
         }
 
@@ -34,7 +34,7 @@ namespace EventSourced.Sample.Warehouse.Domain.Container
             EnqueueAndApplyEvent(new ReceivedItemFromImportLocationDomainEvent(warehouseItemId, amount));
         }
 
-        public void RemoveItemFromContainer(Guid warehouseItemId, int amount)
+        public void RemoveItemFromContainer(string  warehouseItemId, int amount)
         {
             var warehouseItemInContainer = FindWarehouseItemInContainer(warehouseItemId);
             if (warehouseItemInContainer == null)
@@ -48,7 +48,7 @@ namespace EventSourced.Sample.Warehouse.Domain.Container
                     $"Warehouse item amount is less than you want to move. Current amount is {warehouseItemInContainer.Amount}.");
             }
             
-            EnqueueAndApplyEvent(new ItemRemovedFromContainerDomainEvent(warehouseItemId, amount));
+            EnqueueAndApplyEvent(new ItemRemovedFromContainerDomainEvent(Guid.Parse(warehouseItemId), amount));
         } 
 
         public void MoveItemToContainer(Guid warehouseItemId, int amount)
@@ -63,18 +63,18 @@ namespace EventSourced.Sample.Warehouse.Domain.Container
         
         private void AddOrUpdateAmountOfItemsInContainer(Guid warehouseItemId, int amount)
         {
-            var existingWarehouseItem = FindWarehouseItemInContainer(warehouseItemId);
+            var existingWarehouseItem = FindWarehouseItemInContainer(warehouseItemId.ToString());
             if (existingWarehouseItem != null)
             {
                 WarehouseItemsInContainer.Remove(existingWarehouseItem);
             }
             var existingItemsCount = existingWarehouseItem?.Amount ?? 0;
-            WarehouseItemsInContainer.Add(new WarehouseItemInContainerValueObject(warehouseItemId, amount + existingItemsCount));
+            WarehouseItemsInContainer.Add(new WarehouseItemInContainerValueObject(warehouseItemId.ToString(), amount + existingItemsCount));
         }
 
         private void RemoveAmountOfItemFromContainer(Guid warehouseItemId, int amount)
         {
-            var warehouseItemInContainer = FindWarehouseItemInContainer(warehouseItemId);
+            var warehouseItemInContainer = FindWarehouseItemInContainer(warehouseItemId.ToString());
             if (warehouseItemInContainer == null)
             {
                 throw new BusinessRuleException($"Warehouse item with id {warehouseItemId} was not found in container.");
@@ -86,11 +86,11 @@ namespace EventSourced.Sample.Warehouse.Domain.Container
 
             if (warehouseItemInContainer.Amount > amount)
             {
-                WarehouseItemsInContainer.Add(new WarehouseItemInContainerValueObject(warehouseItemId, warehouseItemInContainer.Amount - amount));
+                WarehouseItemsInContainer.Add(new WarehouseItemInContainerValueObject(warehouseItemId.ToString(), warehouseItemInContainer.Amount - amount));
             }
         }
         
-        private WarehouseItemInContainerValueObject? FindWarehouseItemInContainer(Guid warehouseItemId)
+        private WarehouseItemInContainerValueObject? FindWarehouseItemInContainer(string warehouseItemId)
         {
             return WarehouseItemsInContainer.SingleOrDefault(i => i.WarehouseItemId == warehouseItemId);
         }

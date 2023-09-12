@@ -35,7 +35,7 @@ namespace EventSourced.Sample.Warehouse.Application.Services.ImportLocation
             {
                 throw new BusinessRuleException("Import location was not found");
             }
-            var importLocationContentProjection = await _manualProjectionBuilder.BuildAggregateProjection<ImportLocationContentProjection, ImportLocationAggregateRoot>(importLocationProjection.ImportLocationId, ct);
+            var importLocationContentProjection = await _manualProjectionBuilder.BuildAggregateProjection<ImportLocationContentProjection, ImportLocationAggregateRoot>(importLocationProjection.ImportLocationId.ToString(), ct);
             var contents = new List<ImportLocationContentListItemModel>();
             foreach (var importedItem in importLocationContentProjection.ImportedItems)
             {

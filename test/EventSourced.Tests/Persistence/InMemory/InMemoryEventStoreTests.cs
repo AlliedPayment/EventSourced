@@ -13,8 +13,8 @@ namespace EventSourced.Tests.Persistence.InMemory
     public class InMemoryEventStoreTests
     {
         private static readonly Type AnyAggregateType = typeof(object);
-        private static readonly Guid AnyStreamId = Guid.NewGuid();
-        private static readonly Guid AnyStreamId2 = Guid.NewGuid();
+        private static readonly string AnyStreamId = Guid.NewGuid().ToString();
+        private static readonly string AnyStreamId2 = Guid.NewGuid().ToString();
         private static readonly int AnyRequiredVersion = 0;
 
         [Fact]

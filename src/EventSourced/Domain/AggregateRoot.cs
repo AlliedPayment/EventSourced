@@ -12,9 +12,9 @@ namespace EventSourced.Domain
 
         public int Version { get; internal set; }
 
-        public Guid Id { get; }
+        public string Id { get; }
 
-        protected AggregateRoot(Guid id)
+        protected AggregateRoot(string id)
         {
             Id = id;
             uncommittedDomainEvents = new Queue<DomainEvent>();

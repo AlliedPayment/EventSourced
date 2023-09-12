@@ -11,7 +11,7 @@ namespace EventSourced.Sample.Warehouse.Domain.ImportLocation.Projections
         public ICollection<ImportedItemsValueObject> ImportedItems { get; set; } = new List<ImportedItemsValueObject>();
 
         public ImportLocationContentProjection(Guid id)
-            : base(id)
+            : base(id.ToString())
         {
         }
 

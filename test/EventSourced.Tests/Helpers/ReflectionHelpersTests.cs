@@ -89,7 +89,7 @@ namespace EventSourced.Tests.Helpers
 
         private class TestAggregateRoot : AggregateRoot
         {
-            public TestAggregateRoot(Guid id)
+            public TestAggregateRoot(string id)
                 : base(id)
             {
             }
@@ -97,7 +97,7 @@ namespace EventSourced.Tests.Helpers
 
         private class TestAggregateProjection : AggregateProjection<TestAggregateRoot>
         {
-            public TestAggregateProjection(Guid id)
+            public TestAggregateProjection(string id)
                 : base(id)
             {
             }

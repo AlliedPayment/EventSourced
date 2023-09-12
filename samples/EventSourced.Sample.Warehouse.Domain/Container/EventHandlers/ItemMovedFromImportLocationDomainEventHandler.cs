@@ -17,7 +17,7 @@ namespace EventSourced.Sample.Warehouse.Domain.Container.EventHandlers
 
         public async Task HandleDomainEventAsync(ItemMovedFromImportLocationDomainEvent domainEvent, CancellationToken ct)
         {
-            var container = await _containerRepository.GetByIdAsync(domainEvent.DestinationContainerId, ct);
+            var container = await _containerRepository.GetByIdAsync(domainEvent.DestinationContainerId.ToString(), ct);
             container.ReceiveItemFromImportLocation(domainEvent.WarehouseItemId, domainEvent.Amount);
             await _containerRepository.SaveAsync(container, ct);
         }

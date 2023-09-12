@@ -28,7 +28,7 @@ namespace EventSourced.Sample.Warehouse.Application.Services.WarehouseItem
                 throw new BusinessRuleException("Import location not found.");
             }
             var importLocationId = importLocationProjection.ImportLocationId;
-            var importLocation = await _importLocationRepository.GetByIdAsync(importLocationId, ct);
+            var importLocation = await _importLocationRepository.GetByIdAsync(importLocationId.ToString(), ct);
             importLocation.ImportWarehouseItem(warehouseItemId, amount);
             await _importLocationRepository.SaveAsync(importLocation, ct);
         }

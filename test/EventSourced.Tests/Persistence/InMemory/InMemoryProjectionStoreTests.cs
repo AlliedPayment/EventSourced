@@ -88,7 +88,7 @@ namespace EventSourced.Tests.Persistence.InMemory
         public async Task LoadAggregateProjectionAsync_WithNonExistingType_ReturnsNull()
         {
             //Arrange
-            var aggregateRootId = Guid.NewGuid();
+            var aggregateRootId = Guid.NewGuid().ToString();
             var sut = CreateSut();
 
             //Act
@@ -106,7 +106,7 @@ namespace EventSourced.Tests.Persistence.InMemory
         public async Task LoadAggregateProjectionAsync_WithExistingType_ReturnsIt()
         {
             //Arrange
-            var aggregateRootId = Guid.NewGuid();
+            var aggregateRootId = Guid.NewGuid().ToString();
             var sut = CreateSut();
             var storedProjection = new TestAggregateProjection(aggregateRootId);
             await sut.StoreAggregateProjectionAsync(aggregateRootId, storedProjection, CancellationToken.None);
@@ -126,7 +126,7 @@ namespace EventSourced.Tests.Persistence.InMemory
         public async Task LoadAllAggregateProjectionsAsync_WithExistingType_ReturnsIt()
         {
             //Arrange
-            var aggregateRootId = Guid.NewGuid();
+            var aggregateRootId = Guid.NewGuid().ToString();
             var sut = CreateSut();
             var storedProjection = new TestAggregateProjection(aggregateRootId);
             await sut.StoreAggregateProjectionAsync(aggregateRootId, storedProjection, CancellationToken.None);
@@ -166,7 +166,7 @@ namespace EventSourced.Tests.Persistence.InMemory
 
         private class TestAggregateProjection : AggregateProjection<TestAggregateRoot>
         {
-            public TestAggregateProjection(Guid id)
+            public TestAggregateProjection(string id)
                 : base(id)
             {
             }
@@ -174,7 +174,7 @@ namespace EventSourced.Tests.Persistence.InMemory
 
         private class TestAggregateRoot : AggregateRoot
         {
-            public TestAggregateRoot(Guid id)
+            public TestAggregateRoot(string id)
                 : base(id)
             {
             }

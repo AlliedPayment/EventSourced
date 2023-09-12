@@ -34,7 +34,7 @@ namespace EventSourced.Sample.Warehouse.Application.Services.Container
             {
                 throw new BusinessRuleException("Import location was not found in system.");
             }
-            var importLocation = await _importLocationRepository.GetByIdAsync(importLocationProjection.ImportLocationId, ct);
+            var importLocation = await _importLocationRepository.GetByIdAsync(importLocationProjection.ImportLocationId.ToString(), ct);
 
             importLocation.MoveItem(containerId, warehouseItemId, amount);
 

@@ -13,7 +13,7 @@ namespace EventSourced.Tests.Snapshots.Strategies
         public void ShouldCreateSnapshot_AlwaysReturnsFalse()
         {
             //Arrange
-            var aggregateRoot = new TestAggregateRoot(Guid.NewGuid());
+            var aggregateRoot = new TestAggregateRoot(Guid.NewGuid().ToString());
             var sut = CreateSut();
             
             //Act
@@ -31,7 +31,7 @@ namespace EventSourced.Tests.Snapshots.Strategies
         
         private class TestAggregateRoot : AggregateRoot
         {
-            public TestAggregateRoot(Guid id)
+            public TestAggregateRoot(string id)
                 : base(id)
             {
             }

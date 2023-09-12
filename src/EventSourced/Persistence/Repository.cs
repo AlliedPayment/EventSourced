@@ -43,7 +43,7 @@ namespace EventSourced.Persistence
             await _domainEventBus.PublishDomainEventsAsync(newDomainEvents, ct);
         }
 
-        public async Task<TAggregateRoot> GetByIdAsync(Guid id, CancellationToken ct)
+        public async Task<TAggregateRoot> GetByIdAsync(string id, CancellationToken ct)
         {
             var aggregateRoot = await LoadFromSnapshotOrCreateAsync(id, ct);
             var domainEvents = await _eventStore.GetByStreamIdAsync(id, typeof(TAggregateRoot), aggregateRoot.Version, ct);
@@ -64,7 +64,7 @@ namespace EventSourced.Persistence
             return aggregateCollection;
         }
 
-        public Task<bool> ExistsAsync(Guid id, CancellationToken ct)
+        public Task<bool> ExistsAsync(string id, CancellationToken ct)
         {
             return _eventStore.StreamExistsAsync(id, typeof(TAggregateRoot), ct);
         }
@@ -82,7 +82,7 @@ namespace EventSourced.Persistence
             }
         }
         
-        private async Task InvokeDomainEventHandlersAsync(Guid aggregateRootId, IList<DomainEvent> domainEvents, CancellationToken ct)
+        private async Task InvokeDomainEventHandlersAsync(string aggregateRootId, IList<DomainEvent> domainEvents, CancellationToken ct)
         {
             foreach (var domainEventHandler in _domainEventHandlers)
             foreach (var domainEvent in domainEvents)
@@ -91,7 +91,7 @@ namespace EventSourced.Persistence
             }
         }
 
-        private async Task<TAggregateRoot> LoadFromSnapshotOrCreateAsync(Guid id, CancellationToken ct)
+        private async Task<TAggregateRoot> LoadFromSnapshotOrCreateAsync(string id, CancellationToken ct)
         {
             var aggregateFromSnapshot = await _snapshotStore.LoadSnapshotAsync(id, ct);
             return aggregateFromSnapshot ?? AggregateRootFactory.CreateAggregateRoot<TAggregateRoot>(id);

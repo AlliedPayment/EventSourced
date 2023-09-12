@@ -42,13 +42,13 @@ namespace EventSourced.Tests.Persistence.EntityFramework.Mappers
             public int SomeAggregateValue { get; private set; }
 
             public TestAggregateRoot(int someAggregateValue) 
-                : this(Guid.NewGuid())
+                : this(Guid.NewGuid().ToString())
             {
                 SomeAggregateValue = someAggregateValue;
                 Version = someAggregateValue;
             }
             
-            public TestAggregateRoot(Guid id)
+            public TestAggregateRoot(string id)
                 : base(id)
             {
             }

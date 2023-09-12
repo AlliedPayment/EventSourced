@@ -66,7 +66,7 @@ namespace EventSourced.Tests.Configuration
 
         private class TestAggregateProjection : AggregateProjection<TestAggregateRoot>
         {
-            public TestAggregateProjection(Guid id)
+            public TestAggregateProjection(string id)
                 : base(id)
             {
             }
@@ -79,11 +79,11 @@ namespace EventSourced.Tests.Configuration
         private class TestAggregateRoot : AggregateRoot
         {
             public TestAggregateRoot()
-                : base(Guid.NewGuid())
+                : base(Guid.NewGuid().ToString())
             {
             }
 
-            public TestAggregateRoot(Guid id)
+            public TestAggregateRoot(string id)
                 : base(id)
             {
             }

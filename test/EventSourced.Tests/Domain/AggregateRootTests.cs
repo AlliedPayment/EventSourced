@@ -84,14 +84,14 @@ namespace EventSourced.Tests.Domain
 
         private TestAggregateRootWithApplyForTestEvent CreateTestAggregateRootWithApplyForTestEvent()
         {
-            return new(Guid.NewGuid());
+            return new(Guid.NewGuid().ToString());
         }
 
         private class TestAggregateRootWithApplyForTestEvent : AggregateRoot
         {
             public string ParameterValue { get; private set; } = string.Empty;
 
-            public TestAggregateRootWithApplyForTestEvent(Guid id)
+            public TestAggregateRootWithApplyForTestEvent(string id)
                 : base(id)
             {
             }

@@ -15,7 +15,7 @@ namespace EventSourced.Tests.Projections.Automatic
     {
         private static readonly Type AnyAggregateType = typeof(object);
 
-        private static readonly Guid AnyAggregateId = Guid.NewGuid();
+        private static readonly string AnyAggregateId = Guid.NewGuid().ToString();
 
         private readonly Mock<IAutomaticProjectionsEventMapper> _automaticProjectionEventMapperMock = new();
 

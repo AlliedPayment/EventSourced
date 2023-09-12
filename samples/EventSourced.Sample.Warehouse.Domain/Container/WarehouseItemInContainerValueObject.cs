@@ -5,10 +5,10 @@ namespace EventSourced.Sample.Warehouse.Domain.Container
 {
     public class WarehouseItemInContainerValueObject : ValueObject
     {
-        public Guid WarehouseItemId { get; }
+        public string WarehouseItemId { get; }
         public int Amount { get;}
 
-        public WarehouseItemInContainerValueObject(Guid warehouseItemId, int amount)
+        public WarehouseItemInContainerValueObject(string warehouseItemId, int amount)
         {
             WarehouseItemId = warehouseItemId;
             Amount = amount;

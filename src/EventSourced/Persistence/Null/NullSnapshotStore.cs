@@ -12,7 +12,7 @@ namespace EventSourced.Persistence.Null
             return Task.CompletedTask;
         }
 
-        public Task<TAggregateRoot?> LoadSnapshotAsync(Guid aggregateRootId, CancellationToken ct)
+        public Task<TAggregateRoot?> LoadSnapshotAsync(string aggregateRootId, CancellationToken ct)
         {
             return Task.FromResult<TAggregateRoot?>(null);
         }

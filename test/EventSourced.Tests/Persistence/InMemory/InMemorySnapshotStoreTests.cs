@@ -15,7 +15,7 @@ namespace EventSourced.Tests.Persistence.InMemory
         public async Task LoadSnapshotAsync_AfterStoringItFirst_ReturnsTheCopy()
         {
             //Arrange
-            var aggregateRoot = new TestAggregateRoot(Guid.NewGuid(), 42);
+            var aggregateRoot = new TestAggregateRoot(Guid.NewGuid().ToString(), 42);
             aggregateRoot.SetNumber(42);
             var sut = CreateSut();
 
@@ -39,7 +39,7 @@ namespace EventSourced.Tests.Persistence.InMemory
             var sut = CreateSut();
 
             //Act
-            var loadedSnapshot = await sut.LoadSnapshotAsync(Guid.NewGuid(), CancellationToken.None);
+            var loadedSnapshot = await sut.LoadSnapshotAsync(Guid.NewGuid().ToString(), CancellationToken.None);
 
             //Assert
             loadedSnapshot.Should()
@@ -55,7 +55,7 @@ namespace EventSourced.Tests.Persistence.InMemory
         {
             public int Number { get; private set; }
 
-            public TestAggregateRoot(Guid id, int version)
+            public TestAggregateRoot(string id, int version)
                 : base(id)
             {
                 Version = version;

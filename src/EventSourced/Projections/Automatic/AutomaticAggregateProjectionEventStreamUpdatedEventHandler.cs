@@ -22,7 +22,7 @@ namespace EventSourced.Projections.Automatic
         }
 
         public async Task HandleDomainEventAsync(Type aggregateRootType,
-                                                 Guid aggregateRootId,
+                                                 string aggregateRootId,
                                                  DomainEvent domainEvent,
                                                  CancellationToken ct)
         {
@@ -41,7 +41,7 @@ namespace EventSourced.Projections.Automatic
         }
 
         private async Task<object> LoadOrCreateAggregateProjectionOfTypeAsync(Type aggregateProjectionType,
-                                                                              Guid aggregateRootId,
+                                                                              string aggregateRootId,
                                                                               CancellationToken ct)
         {
             var projection = await _projectionStore.LoadAggregateProjectionAsync(aggregateProjectionType, aggregateRootId, ct);

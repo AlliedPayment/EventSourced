@@ -31,7 +31,7 @@ namespace EventSourced.Diagnostics.Web.Pages.AggregateProjectionTypeDetail
         public ICollection<AggregateProjectionValueModel> ProjectionValues { get; set; } = new List<AggregateProjectionValueModel>();
         [Bind(Direction.ServerToClient)]
         public AggregateProjectionValueModel? SelectedValue { get; set; }
-        public Guid? SelectedAggregateId { get; set; }
+        public string? SelectedAggregateId { get; set; }
 
         public override async Task Load()
         {

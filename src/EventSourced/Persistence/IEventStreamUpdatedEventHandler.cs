@@ -7,6 +7,6 @@ namespace EventSourced.Persistence
 {
     public interface IEventStreamUpdatedEventHandler
     {
-        Task HandleDomainEventAsync(Type aggregateRootType, Guid aggregateRootId, DomainEvent domainEvent, CancellationToken ct);
+        Task HandleDomainEventAsync(Type aggregateRootType, string aggregateRootId, DomainEvent domainEvent, CancellationToken ct);
     }
 }

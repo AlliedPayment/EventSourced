@@ -6,9 +6,9 @@ namespace EventSourced.Sample.Warehouse.Application.Services.Container
 {
     public interface IMoveItemsBetweenContainersApplicationService
     {
-        Task MoveItemBetweenContainersAsync(Guid sourceContainerId,
-                                            Guid destinationContainer,
-                                            Guid warehouseItemId,
+        Task MoveItemBetweenContainersAsync(string sourceContainerId,
+                                            string destinationContainer,
+                                            string warehouseItemId,
                                             int amount,
                                             CancellationToken ct);
     }

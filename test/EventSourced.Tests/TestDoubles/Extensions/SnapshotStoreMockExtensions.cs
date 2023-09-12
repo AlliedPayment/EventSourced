@@ -13,7 +13,7 @@ namespace EventSourced.Tests.TestDoubles.Extensions
             TAggregateRoot aggregateRoot) 
             where TAggregateRoot : AggregateRoot
         {
-            mock.Setup(s => s.LoadSnapshotAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+            mock.Setup(s => s.LoadSnapshotAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(aggregateRoot);
             return mock;
         }

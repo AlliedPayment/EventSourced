@@ -37,7 +37,7 @@ namespace EventSourced.Projections
         }
 
         public async Task<TAggregateProjection> BuildAggregateProjection<TAggregateProjection, TAggregateRoot>(
-            Guid aggregateRootId,
+            string aggregateRootId,
             CancellationToken ct) where TAggregateProjection : AggregateProjection<TAggregateRoot> where TAggregateRoot : AggregateRoot
         {
             var types = ReflectionHelpers.GetTypesOfDomainEventsApplicableToObject(typeof(TAggregateProjection));

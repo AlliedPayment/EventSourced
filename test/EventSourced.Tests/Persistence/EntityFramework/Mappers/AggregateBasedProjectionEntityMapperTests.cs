@@ -14,7 +14,7 @@ namespace EventSourced.Tests.Persistence.EntityFramework.Mappers
         public void MapToEntity_WhenUnmapped_KeepsEverythingSet()
         {
             //Arrange
-            var aggregateId = Guid.NewGuid();
+            var aggregateId = Guid.NewGuid().ToString();
             var projection = new TestProjection(aggregateId);
             projection.SetNumber(42);
             var sut = CreateSut();
@@ -37,7 +37,7 @@ namespace EventSourced.Tests.Persistence.EntityFramework.Mappers
         {
             public int NumberWithPrivateSet { get; private set; }
 
-            public TestProjection(Guid id)
+            public TestProjection(string id)
                 : base(id)
             {
             }
@@ -50,7 +50,7 @@ namespace EventSourced.Tests.Persistence.EntityFramework.Mappers
 
         private class TestAggregateRoot : AggregateRoot
         {
-            public TestAggregateRoot(Guid id)
+            public TestAggregateRoot(string id)
                 : base(id)
             {
             }

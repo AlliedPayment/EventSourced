@@ -22,7 +22,7 @@ namespace EventSourced.Persistence.InMemory
             StreamsDictionary = new ConcurrentDictionary<StreamIdentification, List<DomainEvent>>(originalState);
         }
 
-        public Task StoreEventsAsync(Guid streamId, Type aggregateRootType, IList<DomainEvent> domainEvents, CancellationToken ct)
+        public Task StoreEventsAsync(string streamId, Type aggregateRootType, IList<DomainEvent> domainEvents, CancellationToken ct)
         {
             var streamIdentification = new StreamIdentification(streamId, aggregateRootType);
             StreamsDictionary.AddOrUpdate(streamIdentification,
@@ -32,7 +32,7 @@ namespace EventSourced.Persistence.InMemory
             return Task.CompletedTask;
         }
 
-        public Task<DomainEvent[]> GetByStreamIdAsync(Guid streamId,
+        public Task<DomainEvent[]> GetByStreamIdAsync(string streamId,
                                                        Type aggregateRootType,
                                                        int fromEventVersion,
                                                        CancellationToken ct)
@@ -50,20 +50,20 @@ namespace EventSourced.Persistence.InMemory
             throw new NotImplementedException();
         }
 
-        public Task<bool> StreamExistsAsync(Guid streamId, Type aggregateRootType, CancellationToken ct)
+        public Task<bool> StreamExistsAsync(string streamId, Type aggregateRootType, CancellationToken ct)
         {
             var streamExists = StreamsDictionary.ContainsKey(new StreamIdentification(streamId, aggregateRootType));
             return Task.FromResult(streamExists);
         }
 
-        public Task<IDictionary<Guid, DomainEvent[]>> GetAllStreamsOfType(Type aggregateRootType, CancellationToken ct)
+        public Task<IDictionary<string, DomainEvent[]>> GetAllStreamsOfType(Type aggregateRootType, CancellationToken ct)
         {
-            IDictionary<Guid, DomainEvent[]> allStreams = StreamsDictionary.Where(d => d.Key.AggregateRootType == aggregateRootType)
-                                                                            .Select(d => new
-                                                                            {
-                                                                                d.Key.StreamId, DomainEvents = d.Value.ToArray()
-                                                                            })
-                                                                            .ToDictionary(d => d.StreamId, d => d.DomainEvents);
+            IDictionary<string, DomainEvent[]> allStreams = StreamsDictionary.Where(d => d.Key.AggregateRootType == aggregateRootType)
+                                                                             .Select(d => new
+                                                                             {
+                                                                                 d.Key.StreamId, DomainEvents = d.Value.ToArray()
+                                                                             })
+                                                                             .ToDictionary(d => d.StreamId, d => d.DomainEvents);
             return Task.FromResult(allStreams);
         }
 
@@ -85,5 +85,5 @@ namespace EventSourced.Persistence.InMemory
         
     }
 
-    public record StreamIdentification(Guid StreamId, Type AggregateRootType);
+    public record StreamIdentification(string StreamId, Type AggregateRootType);
 }

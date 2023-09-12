@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using EventSourced.Configuration;
 using EventSourced.Domain;
 using EventSourced.Domain.Events;
@@ -130,7 +130,7 @@ namespace EventSourced.Tests.Projections.Automatic
 
         private class TestAggregateProjection : AggregateProjection<TestAggregateRoot>
         {
-            public TestAggregateProjection(Guid id)
+            public TestAggregateProjection(string id)
                 : base(id)
             {
             }
@@ -142,7 +142,7 @@ namespace EventSourced.Tests.Projections.Automatic
 
         private class TestAggregateRoot : AggregateRoot
         {
-            public TestAggregateRoot(Guid id)
+            public TestAggregateRoot(string id)
                 : base(id)
             {
             }

@@ -18,7 +18,7 @@ namespace EventSourced.Tests.Persistence.EntityFramework
         public async Task LoadSnapshotAsync_WithExistingValues_ReloadsItCorrectly()
         {
             //Arrange
-            var aggregateId = Guid.NewGuid();
+            var aggregateId = Guid.NewGuid().ToString();
             var testAggregate = new TestAggregate(aggregateId);
             testAggregate.SetTitle("42");
             var sut = CreateSut(TestDbContextFactory.Create());
@@ -40,7 +40,7 @@ namespace EventSourced.Tests.Persistence.EntityFramework
         public async Task LoadSnapshotAsync_WithUpdatedValue_ReloadsItCorrectly()
         {
             //Arrange
-            var aggregateId = Guid.NewGuid();
+            var aggregateId = Guid.NewGuid().ToString();
             var testAggregate = new TestAggregate(aggregateId);
             testAggregate.SetTitle("42");
             var dbContext = TestDbContextFactory.Create();
@@ -65,7 +65,7 @@ namespace EventSourced.Tests.Persistence.EntityFramework
         public async Task LoadSnapshotAsync_WithNonExistingValue_ReturnsNull()
         {
             //Arrange
-            var aggregateId = Guid.NewGuid();
+            var aggregateId = Guid.NewGuid().ToString();
             var sut = CreateSut(TestDbContextFactory.Create());
 
             //Act
@@ -88,7 +88,7 @@ namespace EventSourced.Tests.Persistence.EntityFramework
         {
             public string Title { get; private set; }
 
-            public TestAggregate(Guid id)
+            public TestAggregate(string id)
                 : base(id)
             {
             }

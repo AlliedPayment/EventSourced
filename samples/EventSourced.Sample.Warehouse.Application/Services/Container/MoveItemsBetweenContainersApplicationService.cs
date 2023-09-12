@@ -15,16 +15,16 @@ namespace EventSourced.Sample.Warehouse.Application.Services.Container
             _containerRepository = containerRepository;
         }
 
-        public async Task MoveItemBetweenContainersAsync(Guid sourceContainerId,
-                                                         Guid destinationContainerId,
-                                                         Guid warehouseItemId,
+        public async Task MoveItemBetweenContainersAsync(string sourceContainerId,
+                                                         string destinationContainerId,
+                                                         string  warehouseItemId,
                                                          int amount,
                                                          CancellationToken ct)
         {
             var sourceContainer = await _containerRepository.GetByIdAsync(sourceContainerId, ct);
             var destinationContainer = await _containerRepository.GetByIdAsync(destinationContainerId, ct);
             sourceContainer.RemoveItemFromContainer(warehouseItemId, amount);
-            destinationContainer.MoveItemToContainer(warehouseItemId, amount);
+            destinationContainer.MoveItemToContainer(Guid.Parse(warehouseItemId), amount);
             await _containerRepository.SaveAsync(sourceContainer, ct);
             await _containerRepository.SaveAsync(destinationContainer, ct);
         }

@@ -12,7 +12,7 @@ namespace EventSourced.Persistence.InMemory
     public class InMemoryProjectionStore : IProjectionStore
     {
         private ConcurrentDictionary<Type, object> ProjectionsMap { get; }
-        private ConcurrentDictionary<Type, ConcurrentDictionary<Guid, object>> AggregateProjectionsMap { get; }
+        private ConcurrentDictionary<Type, ConcurrentDictionary<string, object>> AggregateProjectionsMap { get; }
 
         public InMemoryProjectionStore()
             : this(new ConcurrentDictionary<Type, object>())
@@ -22,7 +22,7 @@ namespace EventSourced.Persistence.InMemory
         public InMemoryProjectionStore(ConcurrentDictionary<Type, object> projectionsMap)
         {
             ProjectionsMap = projectionsMap;
-            AggregateProjectionsMap = new ConcurrentDictionary<Type, ConcurrentDictionary<Guid, object>>();
+            AggregateProjectionsMap = new ConcurrentDictionary<Type, ConcurrentDictionary<string, object>>();
         }
 
         public Task<object?> LoadProjectionAsync(Type projectionType, CancellationToken ct)
@@ -37,7 +37,7 @@ namespace EventSourced.Persistence.InMemory
             return Task.FromResult<ICollection<object>>(projection.ToList());
         }
 
-        public Task<object?> LoadAggregateProjectionAsync(Type projectionType, Guid aggregateRootId, CancellationToken ct)
+        public Task<object?> LoadAggregateProjectionAsync(Type projectionType, string aggregateRootId, CancellationToken ct)
         {
             if (AggregateProjectionsMap.TryGetValue(projectionType, out var projectionByIdDictionary))
             {
@@ -49,9 +49,9 @@ namespace EventSourced.Persistence.InMemory
             return Task.FromResult<object?>(null);
         }
 
-        public Task<IDictionary<Guid, List<object>>> LoadAllAggregateProjectionsAsync(CancellationToken ct)
+        public Task<IDictionary<string, List<object>>> LoadAllAggregateProjectionsAsync(CancellationToken ct)
         {
-            var aggregateIdToProjectionsMap = new Dictionary<Guid, List<object>>();
+            var aggregateIdToProjectionsMap = new Dictionary<string, List<object>>();
             foreach (var projectionsByAggregateId in AggregateProjectionsMap.Values)
             {
                 foreach (var (aggregateId, projection) in projectionsByAggregateId)
@@ -67,7 +67,7 @@ namespace EventSourced.Persistence.InMemory
                     }
                 }
             }
-            return Task.FromResult<IDictionary<Guid, List<object>>>(aggregateIdToProjectionsMap);
+            return Task.FromResult<IDictionary<string, List<object>>>(aggregateIdToProjectionsMap);
         }
 
         public Task StoreProjectionAsync(object projection, CancellationToken ct)
@@ -76,12 +76,12 @@ namespace EventSourced.Persistence.InMemory
             return Task.CompletedTask;
         }
 
-        public Task StoreAggregateProjectionAsync(Guid streamId, object aggregateProjection, CancellationToken ct)
+        public Task StoreAggregateProjectionAsync(string streamId, object aggregateProjection, CancellationToken ct)
         {
             var projectionType = aggregateProjection.GetType();
             if (!AggregateProjectionsMap.ContainsKey(projectionType))
             {
-                AggregateProjectionsMap[projectionType] = new ConcurrentDictionary<Guid, object>();
+                AggregateProjectionsMap[projectionType] = new ConcurrentDictionary<string, object>();
             }
 
             AggregateProjectionsMap[projectionType][streamId] = aggregateProjection.DeepClone();

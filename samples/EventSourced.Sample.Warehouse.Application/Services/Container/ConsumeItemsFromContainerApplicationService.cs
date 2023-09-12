@@ -17,8 +17,8 @@ namespace EventSourced.Sample.Warehouse.Application.Services.Container
 
         public async Task ConsumeItemsAsync(Guid containerId, Guid warehouseItemId, int amount, CancellationToken ct)
         {
-            var container = await _containerRepository.GetByIdAsync(containerId, ct);
-            container.RemoveItemFromContainer(warehouseItemId, amount);
+            var container = await _containerRepository.GetByIdAsync(containerId.ToString(), ct);
+            container.RemoveItemFromContainer(warehouseItemId.ToString(), amount);
             await _containerRepository.SaveAsync(container, ct);
         }
     }

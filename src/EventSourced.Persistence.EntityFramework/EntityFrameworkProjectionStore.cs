@@ -44,7 +44,7 @@ namespace EventSourced.Persistence.EntityFramework
                                      .ToList();
         }
 
-        public async Task<object?> LoadAggregateProjectionAsync(Type projectionType, Guid aggregateRootId, CancellationToken ct)
+        public async Task<object?> LoadAggregateProjectionAsync(Type projectionType, string aggregateRootId, CancellationToken ct)
         {
             var serializedProjectionType = _typeSerializer.SerializeType(projectionType);
             var projectionEntity = await _eventSourcedDbContext
@@ -54,7 +54,7 @@ namespace EventSourced.Persistence.EntityFramework
             return projectionEntity != null ? _aggregateBasedProjectionEntityMapper.MapToProjection(projectionEntity) : null;
         }
 
-        public async Task<IDictionary<Guid, List<object>>> LoadAllAggregateProjectionsAsync(CancellationToken ct)
+        public async Task<IDictionary<string, List<object>>> LoadAllAggregateProjectionsAsync(CancellationToken ct)
         {
             var projectionEntities = await _eventSourcedDbContext.AggregateBasedProjections.ToListAsync(ct);
             return projectionEntities.GroupBy(p => p.AggregateRootId)
@@ -80,7 +80,7 @@ namespace EventSourced.Persistence.EntityFramework
             await _eventSourcedDbContext.SaveChangesAsync(ct);
         }
 
-        public async Task StoreAggregateProjectionAsync(Guid streamId, object aggregateProjection, CancellationToken ct)
+        public async Task StoreAggregateProjectionAsync(string streamId, object aggregateProjection, CancellationToken ct)
         {
             var projectionEntity = _aggregateBasedProjectionEntityMapper.MapToEntity(streamId, aggregateProjection);
             if (await _eventSourcedDbContext.AggregateBasedProjections.AnyAsync(

@@ -40,7 +40,7 @@ namespace EventSourced.Sample.Warehouse.Web.Pages.Container
 
         private async Task ReloadDataAsync()
         {
-            ContainerDetailModel = await _containerDetailApplicationService.GetContainerDetailAsync(ContainerId, RequestCancellationToken);
+            ContainerDetailModel = await _containerDetailApplicationService.GetContainerDetailAsync(ContainerId.ToString(), RequestCancellationToken);
         }
 
         public void ShowConsumeItemsDialog()
@@ -80,9 +80,9 @@ namespace EventSourced.Sample.Warehouse.Web.Pages.Container
         [BusinessRuleExceptionFilter(nameof(MoveItemsDialogModel))]
         public async Task MoveItemsAsync(MoveItemsDialogModel dialogModel)
         {
-            await _moveItemsBetweenContainersApplicationService.MoveItemBetweenContainersAsync(dialogModel.SourceContainerId,
-                dialogModel.DestinationContainerId,
-                dialogModel.SelectedWarehouseItemId,
+            await _moveItemsBetweenContainersApplicationService.MoveItemBetweenContainersAsync(dialogModel.SourceContainerId.ToString(),
+                dialogModel.DestinationContainerId.ToString(),
+                dialogModel.SelectedWarehouseItemId.ToString(),
                 dialogModel.Amount,
                 RequestCancellationToken);
             await ReloadDataAsync();
